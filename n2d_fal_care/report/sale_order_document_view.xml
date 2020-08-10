@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document" priority="10000">
+        <xpath expr="//t[@t-set='address']" position="replace">
+
+        </xpath>
+        <xpath expr="//h2" position="replace">
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div id="informations" style="margin-bottom:25px">
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="9" style="width: 70%;">
+                            <address t-field="doc.partner_id"
+                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        </td>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Quotation No. :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Quotation Date :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.date_order"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Quotation Validity :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.validity_date"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Payment :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.payment_term_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Delivery :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.commitment_date"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Ref. No. :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.origin"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Salesperson :</strong>
+                        </td>
+                        <td>
+                            <p t-field="doc.user_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Manuf. &amp; COO :</strong>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[1]" position='before'>
+            <th>No. </th>
+            <th>Item Code / رقم المنتج</th>
+            <t t-set="serial" t-value="0"/>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr/t/td[1]" position='before'>
+            <td>
+                <t t-set="serial" t-value="serial+1"/>
+                <span t-esc="serial"/>
+            </td>
+            <td>
+                <span t-field="line.product_id.default_code"/>
+            </td>
+        </xpath>
+        <xpath expr="//th[@name='th_description']" position="replace">
+            <th>Description / وصف المنتج</th>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[3]" position='after'>
+            <th>Unit</th>
+        </xpath>
+
+        <xpath expr="//table/tbody/t/tr/t/td[3]" position='after'>
+            <td>
+                <span t-field="line.product_uom"/>
+            </td>
+        </xpath>
+        <xpath expr="///th[@name='th_priceunit']" position='after'>
+            <th>VAT%</th>
+            <th>VAT</th>
+            <th>Total Price</th>
+        </xpath>
+        <xpath expr="///td[@name='td_priceunit']" position='after'>
+            <td>
+                <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
+            </td>
+            <td>
+                <t t-set="tax_per" t-value="0.0"/>
+                <t t-foreach="line.tax_id" t-as="inv">
+                    <t t-set="tax_per +inv.amount" t-value="0.0"/>
+                </t>
+                <span t-esc="line.price_total - line.price_subtotal"/>
+            </td>
+            <td>
+                <span t-field="line.price_total"/>
+            </td>
+        </xpath>
+
+
+        <xpath expr="//th[@name='th_taxes']" position='replace'>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position='replace'>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position='replace'>
+        </xpath>
+        <xpath expr="//td[@name='td_subtotal']" position='replace'>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.payment_term_id.note']/.." position='after'>
+            <p>
+                Stamp :
+                <br/>
+                <br/>
+            </p>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.payment_term_id.note']" position='replace'>
+        </xpath>
+
+
+
+        <xpath expr="//div[@id='total']/div/table" position="inside">
+            <tr class="border-black o_total">
+                <td>
+                    <strong>Total In Words:</strong>
+                </td>
+                <td class="text-right">
+                    <t t-esc="doc.get_number_in_words(doc.amount_total,'en')"/>
+                </td>
+            </tr>
+        </xpath>
+
+    </template>
+</odoo>
