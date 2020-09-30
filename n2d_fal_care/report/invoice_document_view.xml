@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="10000">
+        <xpath expr="//t[@t-set='address']" position="replace">
+
+        </xpath>
+        <xpath expr="//h2" position="replace">
+        </xpath>
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div id="informations" style="margin-bottom:25px">
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="6" style="width: 70%;">
+                            <address t-field="o.partner_id"
+                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        </td>
+                        <td>
+                            <strong t-if="o.type == 'out_invoice' and o.state == 'posted'">Invoice</strong>
+                            <strong t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</strong>
+                            <strong t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</strong>
+                            <strong t-if="o.type == 'out_refund'">Credit Note</strong>
+                            <strong t-if="o.type == 'in_refund'">Vendor Credit Note</strong>
+                            <strong t-if="o.type == 'in_invoice'">Vendor Bill</strong>
+                        </td>
+                        <td>
+                            <span t-if="o.name != '/'" t-field="o.name"/>
+                        </td>
+                    </tr>
+                    <tr t-if="o.invoice_date" name="invoice_date">
+                        <td>
+                            <strong>Invoice Date:</strong>
+                        </td>
+                        <td>
+                            <p t-field="o.invoice_date"/>
+                        </td>
+                    </tr>
+                    <tr t-if="o.invoice_date_due and o.type == 'out_invoice' and o.state == 'posted'" name="due_date">
+                        <td>
+                            <strong>Due Date:</strong>
+                        </td>
+                        <td>
+                            <p t-field="o.invoice_date_due"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>P.O.#</strong>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Sales person</strong>
+                        </td>
+                        <td>
+                            <p t-field="o.invoice_user_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                Manufacture:
+                            </strong>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </xpath>
+
+        <xpath expr="//table/thead/tr/th[1]" position='before'>
+            <th>#</th>
+            <th>Item</th>
+            <t t-set="serial" t-value="0"/>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr/t/td[1]" position='before'>
+            <td>
+                <t t-set="serial" t-value="serial+1"/>
+                <span t-esc="serial"/>
+            </td>
+            <td>
+                <span t-field="line.product_id"/>
+            </td>
+        </xpath>
+        <xpath expr="//th[@name='th_taxes']" position='replace'>
+        </xpath>
+        <xpath expr="///th[@name='th_priceunit']" position='after'>
+            <th>VAT</th>
+        </xpath>
+
+        <xpath expr="//table/thead/tr/th[3]" position='after'>
+            <th>Unit</th>
+            <th>Lot No.</th>
+            <th>Expiry Date</th>
+        </xpath>
+        <xpath expr="//table/tbody/t/tr/t/td[3]" position='after'>
+            <td>
+                <span t-field="line.product_uom_id"/>
+            </td>
+            <td>
+                <span t-field="line.lot_id"/>
+            </td>
+            <td>
+                <span t-field="line.life_date"/>
+            </td>
+        </xpath>
+        <xpath expr="//span[@t-field='line.price_unit']/.." position='after'>
+            <td>
+                <t t-esc="'{0:,.3f}'.format(float(line.price_total - line.price_subtotal))" digits="[16,3]"/>
+            </td>
+        </xpath>
+        <xpath expr="//span[@id='line_tax_ids']/.." position='replace'>
+        </xpath>
+        <xpath expr="//div[@id='total']/div/table" position="inside">
+            <tr class="border-black o_total">
+                <td>
+                    <strong>Total In Words:</strong>
+                </td>
+                <td class="text-right">
+                    <t t-esc="o.get_number_in_words(o.amount_total,'en')"/>
+                </td>
+            </tr>
+        </xpath>
+
+        <xpath expr="//div[@id='qrcode']" position="after">
+            <p>
+                <strong>
+                    Fal Care Bank Account
+                    <br/>
+                    National Commercial Bank
+                    <br/>
+                    IBAN: SA9810000012474011000107
+                    <br/>
+                </strong>
+                <br/>
+                <br/>
+                For Customer Use
+                Received By :
+                <br/>
+                <br/>
+                Stamp :
+                <br/>
+                <br/>
+            </p>
+            <div class="row" style="width:100%">
+                <div class="col-6 text-center">
+                    <strong>Authorized Signature</strong>
+                </div>
+                <div class="col-6 text-center">
+                    <strong>Receiver Signature</strong>
+                </div>
+            </div>
+            <div class="row" style="width:100%; margin-top:10px">
+                <div class="col-6 text-center">
+                    <strong>______________________</strong>
+                </div>
+                <div class="col-6 text-center">
+                    <strong>______________________</strong>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="report_invoice_sequence_qweb" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@class='col-6']" position="replace">
+            <div class="header"></div>
+        </xpath>
+        <xpath expr="//div[@class='col-9 text-right']" position="replace">
+            <div class="col-9 text-right" name="company_address">
+                <div t-field="company.partner_id"
+                     t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
+            </div>
+        </xpath>
+        <!--
+        <xpath expr="//div[@class='row zero_min_height']" position="replace">
+            <table>
+                <tr>
+                    <td style="width:42.5%">
+                        <hr style="border-bottom: 1px solid black;"/>
+                    </td>
+                    <td style="vertical-align:middle; text-align: center"><b>INVOICE / فاتورة</b></td>
+                    <td style="width:42%">
+                        <hr style="border-bottom: 1px solid black;"/>
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+        -->
+    </template>
+</odoo>

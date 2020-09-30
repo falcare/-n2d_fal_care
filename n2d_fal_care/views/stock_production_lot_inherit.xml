@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_stock_production_lot_inherit" model="ir.ui.view">
+            <field name="name">view.stock.production.lot.inherit</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='life_date']" position="attributes">
+                    <attribute name="string">EXP.date</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
