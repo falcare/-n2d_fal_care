@@ -12,6 +12,8 @@
         'stock',
         'product_expiry',
         'account',
+        'stock_dropshipping',
+        'delivery'
     ],
     "data": [
         'views/stock_production_lot_inherit.xml',

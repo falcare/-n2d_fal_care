@@ -74,6 +74,15 @@
 
         </xpath>
 
+        <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+            <td name="td_name">
+                <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                <span t-if="line.product_id.seller_ids"
+                      t-esc="'['+line.product_id.seller_ids[0].name.name+ ', '+ line.product_id.seller_ids[0].name.country_id.name+']'"/>
+                <span t-if="line.product_id.hs_code" t-esc="'['+line.product_id.hs_code+ ']'"/>
+            </td>
+        </xpath>
+
         <xpath expr="//table/thead/tr/th[1]" position='before'>
             <th>#</th>
             <th>Item</th>
@@ -176,20 +185,21 @@
                      t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}"/>
             </div>
         </xpath>
+
         <!--
-        <xpath expr="//div[@class='row zero_min_height']" position="replace">
-            <table>
-                <tr>
-                    <td style="width:42.5%">
-                        <hr style="border-bottom: 1px solid black;"/>
-                    </td>
-                    <td style="vertical-align:middle; text-align: center"><b>INVOICE / فاتورة</b></td>
-                    <td style="width:42%">
-                        <hr style="border-bottom: 1px solid black;"/>
-                    </td>
-                </tr>
-            </table>
-        </xpath>
-        -->
+<xpath expr="//div[@class='row zero_min_height']" position="replace">
+    <table>
+        <tr>
+            <td style="width:42.5%">
+                <hr style="border-bottom: 1px solid black;"/>
+            </td>
+            <td style="vertical-align:middle; text-align: center"><b>INVOICE / فاتورة</b></td>
+            <td style="width:42%">
+                <hr style="border-bottom: 1px solid black;"/>
+            </td>
+        </tr>
+    </table>
+</xpath>
+-->
     </template>
 </odoo>

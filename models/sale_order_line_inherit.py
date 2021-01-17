@@ -12,6 +12,20 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return num2words(amount, lang=lang)
 
+    # purchase_line_data = self.env['purchase.order.line'].read_group(
+    #     [('sale_order_id', 'in', self.ids)],
+
+    def purchase_order_so(self):
+        self.ensure_one()
+        purchase_line_data = self.env['purchase.order.line'].search(
+            [('sale_order_id', '=', self.ids)])
+
+        purchase_order = purchase_line_data.mapped('order_id')
+
+        action = self.env.ref('purchase.purchase_rfq').read()[0]
+        action['domain'] = [('id', 'in', purchase_order.ids)]
+        return action
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
