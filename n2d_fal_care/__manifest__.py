@@ -22,6 +22,7 @@
         'views/stock_move_inherit.xml',
         'report/invoice_document_view.xml',
         'report/sale_order_document_view.xml',
+        'report/sale_stock_report_invoice_document.xml',
     ],
     'external_dependencies': {
         'python': [
