@@ -7,87 +7,192 @@
         <xpath expr="//h2" position="replace">
         </xpath>
         <xpath expr="//div[@id='informations']" position="replace">
-            <div id="informations" style="margin-bottom:25px">
-                <table style="width: 100%;">
-                    <tr>
-                        <td rowspan="6" style="width: 70%;">
-                            <address t-field="o.partner_id"
-                                     t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
-                        </td>
-                        <td>
-                            <strong t-if="o.type == 'out_invoice' and o.state == 'posted'">Invoice</strong>
-                            <strong t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</strong>
-                            <strong t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</strong>
-                            <strong t-if="o.type == 'out_refund'">Credit Note</strong>
-                            <strong t-if="o.type == 'in_refund'">Vendor Credit Note</strong>
-                            <strong t-if="o.type == 'in_invoice'">Vendor Bill</strong>
-                        </td>
-                        <td>
-                            <span t-if="o.name != '/'" t-field="o.name"/>
-                        </td>
-                    </tr>
-                    <tr t-if="o.invoice_date" name="invoice_date">
-                        <td>
-                            <strong>Invoice Date:</strong>
-                        </td>
-                        <td>
-                            <p t-field="o.invoice_date"/>
-                        </td>
-                    </tr>
-                    <tr t-if="o.invoice_date_due and o.type == 'out_invoice' and o.state == 'posted'" name="due_date">
-                        <td>
-                            <strong>Due Date:</strong>
-                        </td>
-                        <td>
-                            <p t-field="o.invoice_date_due"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>P.O.#</strong>
-                        </td>
-                        <td>
+            <t t-if="o.company_id.id == 3">
+                <div id="informations" style="margin-bottom:25px">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td rowspan="6" style="width: 70%;">
+                                <address t-field="o.partner_id"
+                                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            </td>
+                            <td>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'posted'">Invoice/فاتورة</strong>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</strong>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice
+                                </strong>
+                                <strong t-if="o.type == 'out_refund'">Credit Note</strong>
+                                <strong t-if="o.type == 'in_refund'">Vendor Credit Note</strong>
+                                <strong t-if="o.type == 'in_invoice'">Vendor Bill</strong>
+                            </td>
+                            <td>
+                                <span t-if="o.name != '/'" t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.invoice_date" name="invoice_date">
+                            <td>
+                                <strong>Invoice Date:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_date"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.invoice_date_due and o.type == 'out_invoice' and o.state == 'posted'"
+                            name="due_date">
+                            <td>
+                                <strong>Due Date:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_date_due"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>P.O.#</strong>
+                            </td>
+                            <td>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Sales person</strong>
-                        </td>
-                        <td>
-                            <p t-field="o.invoice_user_id"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>
-                                Manufacture:
-                            </strong>
-                        </td>
-                        <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Sales person:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_user_id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Sales person Tel:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_user_id.phone"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    Manufacture:
+                                </strong>
+                            </td>
+                            <td>
 
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+            <t t-if="o.company_id.id != 3">
+                <div id="informations" style="margin-bottom:25px">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td rowspan="6" style="width: 70%;">
+                                <address t-field="o.partner_id"
+                                         t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                            </td>
+                            <td>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'posted'">Invoice</strong>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</strong>
+                                <strong t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice
+                                </strong>
+                                <strong t-if="o.type == 'out_refund'">Credit Note</strong>
+                                <strong t-if="o.type == 'in_refund'">Vendor Credit Note</strong>
+                                <strong t-if="o.type == 'in_invoice'">Vendor Bill</strong>
+                            </td>
+                            <td>
+                                <span t-if="o.name != '/'" t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.invoice_date" name="invoice_date">
+                            <td>
+                                <strong>Invoice Date:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_date"/>
+                            </td>
+                        </tr>
+                        <tr t-if="o.invoice_date_due and o.type == 'out_invoice' and o.state == 'posted'"
+                            name="due_date">
+                            <td>
+                                <strong>Due Date:</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_date_due"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>P.O.#</strong>
+                            </td>
+                            <td>
 
-            </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Sales person</strong>
+                            </td>
+                            <td>
+                                <p t-field="o.invoice_user_id"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    Manufacture:
+                                </strong>
+                            </td>
+                            <td>
 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
         </xpath>
 
-        <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
-            <td name="td_name">
-                <span t-field="line.name" t-options="{'widget': 'text'}"/>
-                <span t-if="line.product_id.seller_ids"
-                      t-esc="'['+line.product_id.seller_ids[0].name.name+ ', '+ line.product_id.seller_ids[0].name.country_id.name+']'"/>
-                <span t-if="line.product_id.hs_code" t-esc="'['+line.product_id.hs_code+ ']'"/>
-            </td>
-        </xpath>
+        <!--        <xpath expr="//td[@name='account_invoice_line_name']" position="replace">-->
+        <!--            <td name="td_name">-->
+        <!--                <span t-field="line.name" t-options="{'widget': 'text'}"/>-->
+        <!--                <span t-if="line.product_id.seller_ids"-->
+        <!--                      t-esc="'['+line.product_id.seller_ids[0].name.name+ ', '+ line.product_id.seller_ids[0].name.country_id.name+']'"/>-->
+        <!--                <span t-if="line.product_id.hs_code" t-esc="'['+line.product_id.hs_code+ ']'"/>-->
+        <!--            </td>-->
+        <!--        </xpath>-->
+
 
         <xpath expr="//table/thead/tr/th[1]" position='before'>
             <th>#</th>
             <th>Item</th>
             <t t-set="serial" t-value="0"/>
         </xpath>
+
+        <xpath expr="//table/thead/tr/th[3]" position='replace'>
+            <t t-if="o.company_id.id == 3">
+                <th>Description/الوصف</th>
+            </t>
+            <t t-if="o.company_id.id != 3">
+                <th>Description</th>
+            </t>
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.name']" position="attributes">
+            <t t-if="o.company_id.id == 3">
+                <attribute name="t-field">line.product_id.name</attribute>
+            </t>
+            <t t-if="o.company_id.id != 3">
+                <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
+                    <td name="td_name">
+                        <span t-field="line.name" t-options="{'widget': 'text'}"/>
+                        <span t-if="line.product_id.seller_ids"
+                              t-esc="'['+line.product_id.seller_ids[0].name.name+ ', '+ line.product_id.seller_ids[0].name.country_id.name+']'"/>
+                        <span t-if="line.product_id.hs_code" t-esc="'['+line.product_id.hs_code+ ']'"/>
+                    </td>
+                </xpath>
+                <attribute name="t-field">line.product_id.display_name</attribute>
+            </t>
+        </xpath>
+
         <xpath expr="//table/tbody/t/tr/t/td[1]" position='before'>
             <td>
                 <t t-set="serial" t-value="serial+1"/>
@@ -116,7 +221,12 @@
                 <span t-field="line.lot_id"/>
             </td>
             <td>
-                <span t-field="line.life_date"/>
+                <t t-if="o.company_id.id == 3">
+                    <span t-if="line.life_date" t-esc="line.life_date.strftime('%Y-%m-%d')"/>
+                </t>
+                <t t-if="o.company_id.id != 3">
+                    <span t-if="line.life_date" t-esc="line.life_date"/>
+                </t>
             </td>
         </xpath>
         <xpath expr="//span[@t-field='line.price_unit']/.." position='after'>
@@ -135,8 +245,21 @@
                     <t t-esc="o.get_number_in_words(o.amount_total,'en')"/>
                 </td>
             </tr>
+            <t t-if="o.company_id.id == 3">
+                <tr>
+                    <td>
+                        <strong>الاجمالي</strong>
+                    </td>
+                    <td class="text-right">
+                        Saudi Riyals
+                    </td>
+                </tr>
+            </t>
         </xpath>
-
+        <t t-if="o.company_id.id == 3">
+            <xpath expr="//p[@name='payment_term']" position="replace">
+            </xpath>
+        </t>
         <xpath expr="//div[@id='qrcode']" position="after">
             <p>
                 <strong>
