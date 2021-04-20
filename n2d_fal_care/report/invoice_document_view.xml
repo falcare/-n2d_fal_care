@@ -7,7 +7,7 @@
         <xpath expr="//h2" position="replace">
         </xpath>
         <xpath expr="//div[@id='informations']" position="replace">
-            <t t-if="o.company_id.id == 3">
+            <t t-if="o.company_id.id == 1">
                 <div id="informations" style="margin-bottom:25px">
                     <table style="width: 100%;">
                         <tr>
@@ -82,7 +82,7 @@
                     </table>
                 </div>
             </t>
-            <t t-if="o.company_id.id != 3">
+            <t t-if="o.company_id.id != 1">
                 <div id="informations" style="margin-bottom:25px">
                     <table style="width: 100%;">
                         <tr>
@@ -168,19 +168,19 @@
         </xpath>
 
         <xpath expr="//table/thead/tr/th[3]" position='replace'>
-            <t t-if="o.company_id.id == 3">
+            <t t-if="o.company_id.id == 1">
                 <th>Description/الوصف</th>
             </t>
-            <t t-if="o.company_id.id != 3">
+            <t t-if="o.company_id.id != 1">
                 <th>Description</th>
             </t>
         </xpath>
 
         <xpath expr="//span[@t-field='line.name']" position="attributes">
-            <t t-if="o.company_id.id == 3">
+            <t t-if="o.company_id.id == 1">
                 <attribute name="t-field">line.product_id.name</attribute>
             </t>
-            <t t-if="o.company_id.id != 3">
+            <t t-if="o.company_id.id != 1">
                 <xpath expr="//td[@name='account_invoice_line_name']" position="replace">
                     <td name="td_name">
                         <span t-field="line.name" t-options="{'widget': 'text'}"/>
@@ -221,10 +221,10 @@
                 <span t-field="line.lot_id"/>
             </td>
             <td>
-                <t t-if="o.company_id.id == 3">
+                <t t-if="o.company_id.id == 1">
                     <span t-if="line.life_date" t-esc="line.life_date.strftime('%Y-%m-%d')"/>
                 </t>
-                <t t-if="o.company_id.id != 3">
+                <t t-if="o.company_id.id != 1">
                     <span t-if="line.life_date" t-esc="line.life_date"/>
                 </t>
             </td>
@@ -245,7 +245,7 @@
                     <t t-esc="o.get_number_in_words(o.amount_total,'en')"/>
                 </td>
             </tr>
-            <t t-if="o.company_id.id == 3">
+            <t t-if="o.company_id.id == 1">
                 <tr>
                     <td>
                         <strong>الاجمالي</strong>
@@ -256,7 +256,7 @@
                 </tr>
             </t>
         </xpath>
-        <t t-if="o.company_id.id == 3">
+        <t t-if="o.company_id.id == 1">
             <xpath expr="//p[@name='payment_term']" position="replace">
             </xpath>
         </t>
