@@ -7,3 +7,8 @@
 	path = falcare/n2d_product_name
 	url = git@github.com:falcare/-n2d_fal_care.git
 	branch = production
+
+[submodule "falcare/-n2d_fal_care/n2d_product_name"]
+	path = falcare/-n2d_fal_care/n2d_product_name
+	url = git@github.com:falcare/-n2d_fal_care.git
+	branch = production
